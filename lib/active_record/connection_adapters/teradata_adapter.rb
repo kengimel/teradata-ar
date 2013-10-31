@@ -28,7 +28,6 @@ module ActiveRecord
 
   module ConnectionAdapters
     class TeradataAdapter < AbstractAdapter
-
       class BindSubstitution < Arel::Visitors::ToSql
         include Arel::Visitors::BindVisitor
 
@@ -139,7 +138,7 @@ module ActiveRecord
       def exec_query(sql, name = 'SQL', binds = [])
         result = execute(sql, name)
         if result && result.count > 0
-          ActiveRecord::Result.new(result.entries[0].keys, result.entries.collect{|r|r.collect{|v|v}})
+          ActiveRecord::Result.new(result.entries.first.keys, result.entries.collect{|r|r.collect{|v|v}})
         else
           ActiveRecord::Result.new([],[])
         end
